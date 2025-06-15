@@ -1,88 +1,165 @@
-
-An 8 page e-commerce website with the 
-home page,
-product detail page, 
-cart and checkout page, 
-under 20 page,  
-under 40 page, 
-for him page, 
-for her page, 
-journal page. 
-
-with great UI UX built using react with the product detail page having a search bar to search and filter out reviewes, integrated gpay, paypal, visa, amex and mastercard for checkout on the cart page.
-the under 20 and under 40 page having filtering options to filter out products based upon category of products i.e body-lotion, body-wash and body-scurb.
-tech stack used = react, javascript, scss and css.
-
-GIVE STAR THE REPO 🌟
+# Event Ticketing App - Next.js & MongoDB
 
 
-# Getting Started with Create React App
+A full-stack event ticketing application built with Next.js (TypeScript) and MongoDB, featuring user authentication, event management, ticket purchasing, and QR code validation.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Features
 
-## Available Scripts
+###  Authentication & User Roles
+- User registration & login with JWT
+- Role-based access control:
+  - Guest: Browse events
+  - User: Buy tickets
+  - Organizer: Create/manage events
+  - Admin: Full system control
 
-In the project directory, you can run the command :
+###  Event Management
+- Browse events with search/filters
+- Create/edit/delete events (Organizers)
+- Set ticket limits and pricing
+- Filter by date, location, price, category
 
-### `npm start`
+###  Ticketing System
+- Mock checkout process
+- One ticket per user per event
+- Unique QR code generation
+- Ticket usage tracking
+- Prevent duplicate purchases
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+###  Dashboard
+- Organizer dashboard:
+  - View owned events
+  - Track ticket sales
+  - See attendees list
+- Admin panel (optional):
+  - Manage users and events
+  - Promote/demote organizers
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+### Frontend
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **UI**: Tailwind CSS
+- **State Management**: React Context + SWR
+- **QR Generation**: qrcode.react
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Backend
+- **Runtime**: Node.js
+- **Framework**: Next.js API Routes
+- **Database**: MongoDB (Mongoose ODM)
+- **Authentication**: JWT with HTTP-only cookies
+- **Password Hashing**: bcryptjs
 
-### `npm run build`
+### Development
+- **Environment Variables**: .env.local
+- **Linting**: ESLint + Prettier
+- **Version Control**: Git
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Getting Started
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
+- Node.js v18+
+- MongoDB Atlas account or local MongoDB instance
+- Git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation
 
-### `npm run eject`
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/event-ticketing-app.git
+   cd event-ticketing-app
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Set up environment variables**:
+   Create `.env.local` file in root directory:
+   ```env
+   MONGODB_URI="your_mongodb_connection_string"
+   JWT_SECRET="your_strong_jwt_secret_here"
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. **Open in your browser**:
+   Visit `http://localhost:3000`
 
-## Learn More
+### Database Setup
+The application will automatically create the following collections:
+- `users` - User accounts
+- `events` - Event listings
+- `tickets` - Ticket records
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Project Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+event-ticketing-app/
+├── app/                   # Next.js App Router
+│   ├── (auth)/            # Authentication routes
+│   ├── (user)/            # User dashboard
+│   ├── (organizer)/       # Organizer dashboard
+│   ├── (admin)/           # Admin panel (optional)
+│   ├── events/            # Event pages
+│   └── api/               # API routes
+│       ├── auth/          # Auth endpoints
+│       ├── events/        # Event endpoints
+│       └── tickets/       # Ticket endpoints
+├── components/            # Reusable UI components
+├── context/               # React context providers
+├── lib/                   # Utility functions
+├── models/                # Mongoose models
+├── public/                # Static assets
+├── styles/                # Global styles
+├── .env.local             # Environment variables
+├── package.json
+└── README.md
+```
 
-### Code Splitting
+## API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/auth/me` - Get current user
 
-### Analyzing the Bundle Size
+### Events
+- `GET /api/events` - Get all events
+- `GET /api/events/[id]` - Get single event
+- `POST /api/events/create` - Create new event (Organizer)
+- `PUT /api/events/[id]` - Update event (Organizer)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Tickets
+- `POST /api/tickets/buy` - Purchase ticket
+- `GET /api/tickets/[userId]` - Get user's tickets
+- `POST /api/tickets/validate` - Validate ticket (QR scan)
 
-### Making a Progressive Web App
+## Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+The application can be deployed to Vercel with minimal configuration:
 
-### Advanced Configuration
+1. Push your code to a Git repository
+2. Create a new project in Vercel and connect your repository
+3. Add environment variables in Vercel dashboard:
+   - `MONGODB_URI`
+   - `JWT_SECRET`
+4. Deploy!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-### Deployment
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Contributions are welcome! Please follow these steps:
 
-### `npm run build` fails to minify
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Create a new Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
